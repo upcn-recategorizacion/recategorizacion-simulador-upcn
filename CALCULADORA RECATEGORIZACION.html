@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UPCN | Calculadora de Recategorización</title>
+
+<style>
+body{font-family:system-ui;background:#f6f7fb;margin:0}
+.wrap{max-width:900px;margin:28px auto;padding:0 16px}
+.card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+  padding: 18px;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("https://www.upcndigital.org/img.php?img=https://www.upcndigital.org/files/articulos/fotos/75192-0.jpg&tip=6&w=965&h=337&cw=64&ch=363") center center no-repeat;
+  background-size: 80%;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+}
+
+ content:"";position:absolute;inset:0;
+ background:url("img.jpg") center center no-repeat;
+ background-size:60%;opacity:.06;pointer-events:none
+}
+h1{font-size:20px;margin:0}
+.sub,.aclaracion{font-size:12px;color:#4a5568}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
+label{font-size:13px;color:#2d3748}
+input,select{width:100%;padding:10px;border:1px solid #d7dce6;border-radius:10px}
+.row{margin-bottom:10px}
+.result{margin-top:14px;padding:14px;border-radius:14px;background:#0b1f3a;color:#fff}
+.result strong{font-size:18px}
+.hint{font-size:12px;color:#4a5568;margin-top:8px;line-height:1.4}
+button{margin-top:12px;padding:10px 14px;border-radius:12px;border:1px solid #d7dce6;background:#fff;cursor:pointer}
+.footer{text-align:center;font-size:12px;color:#718096;margin-top:16px}
+hr{border:none;border-top:1px solid #e5eaf3;margin:14px 0}
+</style>
+</head>
+
+<body>
+<div class="wrap"><div class="card">
+<div style="text-align:center; margin-bottom:12px;">
+  <img src="https://www.upcndigital.org/img.php?img=https://www.upcndigital.org/files/articulos/fotos/75192-0.jpg&tip=6&w=965&h=337&cw=64&ch=363"
+     alt="UPCN"
+     
+       style="max-width:350px; width:220%; height:auto;">
+</div>
+
+
+<h1>UPCN | Calculadora de Recategorización</h1>
+<p class="sub">Herramienta de orientación para recategorización escalafonaria</p>
+<p class="aclaracion">
+Agentes de la Planta Permanente del Escalafón General, personal de Salud Mental y pertenecientes al escalafón Agentes Sanitarios
+</p>
+
+<div class="grid">
+  <div class="row">
+    <label>Régimen</label>
+    <select id="regimen">
+      <option value="GENERAL">Régimen General</option>
+      <option value="SALUD">Personal de Salud</option>
+    </select>
+  </div>
+</div>
+
+<hr>
+
+<!-- ================= RÉGIMEN GENERAL ================= -->
+<div id="formGeneral">
+<div class="grid">
+  <div class="row">
+    <label>Agrupamiento</label>
+    <select id="g_agrup">
+      <option value="">— Seleccionar —</option>
+      <option>Obrero/Maestranza/Servicios</option>
+      <option>Administrativo y Técnico</option>
+      <option>Profesional Tramo C</option>
+      <option>Profesional Tramos A y B</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Antigüedad total (años)<br><small>Antigüedad computada al 30/06/2025</small></label>
+    <input type="number" id="g_antTotal">
+  </div>
+
+  <div class="row">
+    <label>¿Tiene cargo de conducción?</label>
+    <select id="g_cargo">
+      <option>NO</option><option>SI</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Tipo de cargo</label>
+    <select id="g_tipo">
+      <option></option><option>División</option><option>Departamento</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Antigüedad en el cargo (años)<br><small>Antigüedad computada al 30/06/2025</small></label>
+    <input type="number" id="g_antCargo">
+  </div>
+
+  <div class="row">
+    <label>¿Tiene capacitaciones realizadas entre el 01/07/2022 al 30/11/2025?</label>
+    <select id="g_cap">
+      <option>NO</option><option>SI</option>
+    </select>
+  </div>
+</div>
+</div>
+
+<!-- ================= SALUD ================= -->
+<div id="formSalud" style="display:none">
+<div class="grid">
+  <div class="row">
+    <label>Agrupamiento (Salud)</label>
+    <select id="s_agrup">
+      <option value="">— Seleccionar —</option>
+      <option>Salud Mental - Obrero/Admin</option>
+      <option>Salud Mental - Profesional Tramo C</option>
+      <option>Salud Mental - Profesional Tramos A y B</option>
+      <option>Agente Sanitario</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label>Antigüedad total (años)<br><small>Antigüedad computada al 30/06/2025</small></label>
+    <input type="number" id="s_antTotal">
+  </div>
+
+  <div class="row">
+    <label>¿Tiene capacitaciones realizadas entre el 01/07/2022 al 30/11/2025?</label>
+    <select id="s_cap">
+      <option>NO</option><option>SI</option>
+    </select>
+  </div>
+</div>
+</div>
+
+<!-- ================= RESULTADO ================= -->
+<div class="result">
+<strong id="resultado">—</strong>
+</div>
+
+<div class="hint">
+Nota: El resultado que arroja la presente calculadora tiene carácter meramente orientativo y se basa en los criterios generales del Instructivo de Recategorización vigente. La determinación definitiva de la categoría se encuentra sujeta a la evaluación de la autoridad competente y a las particularidades de cada caso. El uso de esta herramienta no genera derechos adquiridos ni resulta vinculante para el Estado Provincial ni para la UPCN.
+<br><br>
+<a href="https://www.upcndigital.org/entre-rios/articulos/75804/?fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPNTY3MDY3MzQzMzUyNDI3AAGnI5ZLxNd5UnK4zIAGlNz2VrWCyvwN_MqlgUAh3eJ_Oi3DNXpReTBkvpJVKJ8_aem_7MrKMAalClQVuEa0AmpK9A"
+
+   style="color:#2b6cb0; text-decoration:underline; font-weight:600;">
+📄 Descargar Instructivo de Recategorización
+</a>
+</div>
+
+
+<button onclick="limpiar()">Nueva Consulta</button>
+
+<div class="footer">
+Desarrollado por: <strong>Maricel M.</strong> y <strong>Fernando V.</strong>
+</div>
+
+</div></div>
+
+<script>
+document.querySelectorAll("input, select").forEach(e => {
+  e.addEventListener("input", calcular);
+  e.addEventListener("change", calcular);
+});
+
+regimen.addEventListener("change", () => {
+  formGeneral.style.display = regimen.value === "GENERAL" ? "block" : "none";
+  formSalud.style.display   = regimen.value === "SALUD"   ? "block" : "none";
+
+  // Limpio solo el formulario que NO se usa
+  if (regimen.value === "GENERAL") {
+    document.querySelectorAll("#formSalud input, #formSalud select").forEach(e => e.value = "");
+  } else {
+    document.querySelectorAll("#formGeneral input, #formGeneral select").forEach(e => e.value = "");
+  }
+
+  resultado.textContent = "—";
+});
+
+
+function calcular(){
+ if(regimen.value==="GENERAL") calcularGeneral();
+ else calcularSalud();
+}
+
+function calcularGeneral(){
+ const a=g_agrup.value,b=+g_antTotal.value,c=g_cargo.value,d=g_tipo.value,e=+g_antCargo.value,f=g_cap.value;
+ if(!a) return resultado.textContent="Seleccione agrupamiento";
+ if (f !== "SI") {
+  return resultado.innerHTML =
+    "<strong>No corresponde (sin capacitaciones)</strong><br>" +
+    "<span style='font-size:13px; color:#e2e8f0;'>" +
+    "Actualmente no registrás capacitaciones realizadas. " +
+    "La inscripción en alguna de nuestras " +
+    "<a href='https://www.instagram.com/capacitacionupcner/?hl=es==' target='_blank' style='color:#90cdf4; text-decoration:underline;'>" +
+    "capacitaciones UPCN</a> podría permitirte avanzar a la etapa 2 o 3 del instructivo de recategorización." +
+    "</span>";
+}
+
+
+ if(c==="SI"){
+  if(!d) return resultado.textContent="Complete tipo de cargo";
+  if(!e) return resultado.textContent="Complete antigüedad en el cargo";
+  if(a==="Profesional Tramo C"){
+    return resultado.textContent=
+      d==="División"? e>=6?"Categoría 2":e>=1?"Categoría 3":"No corresponde":
+      e>=6?"Categoría 1":e>=1?"Categoría 2":"No corresponde";
+  }else{
+    return resultado.textContent=
+      d==="División"? e>=10?"Categoría 2":e>=6?"Categoría 3":e>=1?"Categoría 4":"No corresponde":
+      e>=10?"Categoría 1":e>=6?"Categoría 2":e>=1?"Categoría 3":"No corresponde";
+  }
+ }
+ if(!b) return resultado.textContent="Complete antigüedad total";
+ if(a==="Obrero/Maestranza/Servicios") return resultado.textContent=b>=25?"Categoría 3":b>=20?"Categoría 4":b>=15?"Categoría 5":b>=12?"Categoría 6":b>=9?"Categoría 7":b>=6?"Categoría 8":"No corresponde";
+ if(a==="Administrativo y Técnico") return resultado.textContent=b>=27?"Categoría 2":b>=24?"Categoría 3":b>=18?"Categoría 4":b>=15?"Categoría 5":b>=10?"Categoría 6":b>=6?"Categoría 7":"No corresponde";
+ if(a==="Profesional Tramo C") return resultado.textContent=b>=17?"Categoría 1":b>=14?"Categoría 2":b>=8?"Categoría 3":"Categoría 4";
+ if(a==="Profesional Tramos A y B") return resultado.textContent=b>=17?"Categoría 2":b>=14?"Categoría 3":b>=8?"Categoría 4":"Categoría 5";
+}
+
+function calcularSalud(){
+ const a=s_agrup.value,b=+s_antTotal.value,c=s_cap.value;
+ if(!a) return resultado.textContent="Seleccione agrupamiento";
+ if (c !== "SI") {
+  return resultado.innerHTML =
+    "<strong>No corresponde (sin capacitaciones)</strong><br>" +
+    "<span style='font-size:13px; color:#e2e8f0;'>" +
+    "Actualmente no registrás capacitaciones realizadas. " +
+    "La inscripción en alguna de nuestras " +
+    "<a href='https://www.instagram.com/capacitacionupcner/?hl=es==' target='_blank' style='color:#90cdf4; text-decoration:underline;'>" +
+    "capacitaciones UPCN</a> podría permitirte avanzar a la etapa 2 o 3 del instructivo de recategorización." +
+    "</span>";
+}
+
+
+ if(!b) return resultado.textContent="Complete antigüedad total";
+
+ if(a==="Salud Mental - Obrero/Admin") return resultado.textContent=b>=17?"Categoría 3":b>=14?"Categoría 4":b>=12?"Categoría 5":b>=9?"Categoría 6":b>=6?"Categoría 7":"No corresponde";
+ if(a==="Salud Mental - Profesional Tramo C") return resultado.textContent=b>=17?"Categoría 1":b>=14?"Categoría 2":b>=7?"Categoría 3":"Categoría 4";
+ if(a==="Salud Mental - Profesional Tramos A y B") return resultado.textContent=b>=17?"Categoría 2":b>=14?"Categoría 3":b>=7?"Categoría 4":"Categoría 5";
+ if(a==="Agente Sanitario") return resultado.textContent=b>=25?"Categoría 13":b>=20?"Categoría 10":b>=15?"Categoría 9":b>=12?"Categoría 8":b>=9?"Categoría 7":b>=6?"Categoría 6":"No corresponde";
+}
+
+function limpiar(){
+  if (regimen.value === "GENERAL") {
+    document.querySelectorAll("#formGeneral input, #formGeneral select")
+      .forEach(e => e.value = "");
+  } else {
+    document.querySelectorAll("#formSalud input, #formSalud select")
+      .forEach(e => e.value = "");
+  }
+
+  resultado.textContent = "—";
+}
+
+</script>
+
+</body>
+</html>
