@@ -222,6 +222,29 @@ Desarrollado por: <strong>Maricel Molina</strong> y <strong>Fernando Valenzuela
 </div></div>
 
 <<script>
+  <script>
+/* ===== BLOQUEO CARGO DE CONDUCCIÓN ===== */
+function controlarCargo() {
+  const tieneCargo = g_cargo.value === "SI";
+
+  g_tipo.disabled = !tieneCargo;
+  g_antCargo.disabled = !tieneCargo;
+
+  if (!tieneCargo) {
+    g_tipo.value = "";
+    g_antCargo.value = "";
+  }
+}
+
+// Ejecutar al cambiar selección
+g_cargo.addEventListener("change", () => {
+  controlarCargo();
+  calcular();
+});
+
+// Ejecutar al cargar la página
+controlarCargo();
+
 document.querySelectorAll("input, select").forEach(e => {
   e.addEventListener("input", calcular);
   e.addEventListener("change", calcular);
@@ -324,6 +347,7 @@ function limpiar(){
 
 </body>
 </html>
+
 
 
 
