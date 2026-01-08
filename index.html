@@ -72,27 +72,6 @@ hr{border:none;border-top:1px solid #e5eaf3;margin:14px 0}
   transition: all .3s ease;
 }
 
-.result.ok {
-  background: linear-gradient(135deg, #0b1f3a, #123a6f);
-  animation: aparecer .35s ease-out;
-}
-
-.result.ok strong {
-  font-size: 20px;
-  display: block;
-  margin-bottom: 4px;
-}
-
-.result.ok span {
-  font-size: 13px;
-  opacity: .9;
-}
-
-@keyframes aparecer {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
   to {
     opacity: 1;
     transform: translateY(0);
@@ -242,8 +221,7 @@ Desarrollado por: <strong>Maricel Molina</strong> y <strong>Fernando Valenzuela
 
 </div></div>
 
-<script>
-/* ================== EVENTOS ================== */
+<<script>
 document.querySelectorAll("input, select").forEach(e => {
   e.addEventListener("input", calcular);
   e.addEventListener("change", calcular);
@@ -259,35 +237,17 @@ regimen.addEventListener("change", () => {
     document.querySelectorAll("#formGeneral input, #formGeneral select").forEach(e => e.value = "");
   }
 
-  resultado.className = "result";
   resultado.textContent = "—";
 });
 
-/* ================== UTIL ================== */
-function mostrarCategoria(cat){
-  resultado.className = "result ok";
-  resultado.innerHTML = `
-    <strong>✔️ TE CORRESPONDERÍA LA ${cat.toUpperCase()}</strong>
-    <span>Según los datos ingresados</span>
-  `;
-}
-
-/* ================== CALCULAR ================== */
 function calcular(){
   if(regimen.value==="GENERAL") calcularGeneral();
   else calcularSalud();
 }
 
-/* ================== RÉGIMEN GENERAL ================== */
+/* ================== GENERAL ================== */
 function calcularGeneral(){
-  const a=g_agrup.value,
-        b=+g_antTotal.value,
-        c=g_cargo.value,
-        d=g_tipo.value,
-        e=+g_antCargo.value,
-        f=g_cap.value;
-
-  resultado.className = "result";
+  const a=g_agrup.value,b=+g_antTotal.value,c=g_cargo.value,d=g_tipo.value,e=+g_antCargo.value,f=g_cap.value;
 
   if(!a) return resultado.textContent="Seleccione agrupamiento";
 
@@ -307,74 +267,27 @@ function calcularGeneral(){
     if(!e) return resultado.textContent="Complete antigüedad en el cargo";
 
     if(a==="Profesional Tramo C"){
-      if(d==="División"){
-        if(e>=6) return mostrarCategoria("Categoría 2");
-        if(e>=1) return mostrarCategoria("Categoría 3");
-        return resultado.textContent="No corresponde";
-      }else{
-        if(e>=6) return mostrarCategoria("Categoría 1");
-        if(e>=1) return mostrarCategoria("Categoría 2");
-        return resultado.textContent="No corresponde";
-      }
+      return resultado.textContent =
+        d==="División"? e>=6?"Categoría 2":e>=1?"Categoría 3":"No corresponde":
+        e>=6?"Categoría 1":e>=1?"Categoría 2":"No corresponde";
     }else{
-      if(d==="División"){
-        if(e>=10) return mostrarCategoria("Categoría 2");
-        if(e>=6)  return mostrarCategoria("Categoría 3");
-        if(e>=1)  return mostrarCategoria("Categoría 4");
-        return resultado.textContent="No corresponde";
-      }else{
-        if(e>=10) return mostrarCategoria("Categoría 1");
-        if(e>=6)  return mostrarCategoria("Categoría 2");
-        if(e>=1)  return mostrarCategoria("Categoría 3");
-        return resultado.textContent="No corresponde";
-      }
+      return resultado.textContent =
+        d==="División"? e>=10?"Categoría 2":e>=6?"Categoría 3":e>=1?"Categoría 4":"No corresponde":
+        e>=10?"Categoría 1":e>=6?"Categoría 2":e>=1?"Categoría 3":"No corresponde";
     }
   }
 
   if(!b) return resultado.textContent="Complete antigüedad total";
 
-  if(a==="Obrero/Maestranza/Servicios"){
-    if(b>=25) return mostrarCategoria("Categoría 3");
-    if(b>=20) return mostrarCategoria("Categoría 4");
-    if(b>=15) return mostrarCategoria("Categoría 5");
-    if(b>=12) return mostrarCategoria("Categoría 6");
-    if(b>=9)  return mostrarCategoria("Categoría 7");
-    if(b>=6)  return mostrarCategoria("Categoría 8");
-    return resultado.textContent="No corresponde";
-  }
-
-  if(a==="Administrativo y Técnico"){
-    if(b>=27) return mostrarCategoria("Categoría 2");
-    if(b>=24) return mostrarCategoria("Categoría 3");
-    if(b>=18) return mostrarCategoria("Categoría 4");
-    if(b>=15) return mostrarCategoria("Categoría 5");
-    if(b>=10) return mostrarCategoria("Categoría 6");
-    if(b>=6)  return mostrarCategoria("Categoría 7");
-    return resultado.textContent="No corresponde";
-  }
-
-  if(a==="Profesional Tramo C"){
-    if(b>=17) return mostrarCategoria("Categoría 1");
-    if(b>=14) return mostrarCategoria("Categoría 2");
-    if(b>=8)  return mostrarCategoria("Categoría 3");
-    return mostrarCategoria("Categoría 4");
-  }
-
-  if(a==="Profesional Tramos A y B"){
-    if(b>=17) return mostrarCategoria("Categoría 2");
-    if(b>=14) return mostrarCategoria("Categoría 3");
-    if(b>=8)  return mostrarCategoria("Categoría 4");
-    return mostrarCategoria("Categoría 5");
-  }
+  if(a==="Obrero/Maestranza/Servicios") return resultado.textContent=b>=25?"Categoría 3":b>=20?"Categoría 4":b>=15?"Categoría 5":b>=12?"Categoría 6":b>=9?"Categoría 7":b>=6?"Categoría 8":"No corresponde";
+  if(a==="Administrativo y Técnico") return resultado.textContent=b>=27?"Categoría 2":b>=24?"Categoría 3":b>=18?"Categoría 4":b>=15?"Categoría 5":b>=10?"Categoría 6":b>=6?"Categoría 7":"No corresponde";
+  if(a==="Profesional Tramo C") return resultado.textContent=b>=17?"Categoría 1":b>=14?"Categoría 2":b>=8?"Categoría 3":"Categoría 4";
+  if(a==="Profesional Tramos A y B") return resultado.textContent=b>=17?"Categoría 2":b>=14?"Categoría 3":b>=8?"Categoría 4":"Categoría 5";
 }
 
 /* ================== SALUD ================== */
 function calcularSalud(){
-  const a=s_agrup.value,
-        b=+s_antTotal.value,
-        c=s_cap.value;
-
-  resultado.className = "result";
+  const a=s_agrup.value,b=+s_antTotal.value,c=s_cap.value;
 
   if(!a) return resultado.textContent="Seleccione agrupamiento";
 
@@ -391,51 +304,19 @@ function calcularSalud(){
 
   if(!b) return resultado.textContent="Complete antigüedad total";
 
-  if(a==="Salud Mental - Obrero/Admin"){
-    if(b>=17) return mostrarCategoria("Categoría 3");
-    if(b>=14) return mostrarCategoria("Categoría 4");
-    if(b>=12) return mostrarCategoria("Categoría 5");
-    if(b>=9)  return mostrarCategoria("Categoría 6");
-    if(b>=6)  return mostrarCategoria("Categoría 7");
-    return resultado.textContent="No corresponde";
-  }
-
-  if(a==="Salud Mental - Profesional Tramo C"){
-    if(b>=17) return mostrarCategoria("Categoría 1");
-    if(b>=14) return mostrarCategoria("Categoría 2");
-    if(b>=7)  return mostrarCategoria("Categoría 3");
-    return mostrarCategoria("Categoría 4");
-  }
-
-  if(a==="Salud Mental - Profesional Tramos A y B"){
-    if(b>=17) return mostrarCategoria("Categoría 2");
-    if(b>=14) return mostrarCategoria("Categoría 3");
-    if(b>=7)  return mostrarCategoria("Categoría 4");
-    return mostrarCategoria("Categoría 5");
-  }
-
-  if(a==="Agente Sanitario"){
-    if(b>=25) return mostrarCategoria("Categoría 13");
-    if(b>=20) return mostrarCategoria("Categoría 10");
-    if(b>=15) return mostrarCategoria("Categoría 9");
-    if(b>=12) return mostrarCategoria("Categoría 8");
-    if(b>=9)  return mostrarCategoria("Categoría 7");
-    if(b>=6)  return mostrarCategoria("Categoría 6");
-    return resultado.textContent="No corresponde";
-  }
+  if(a==="Salud Mental - Obrero/Admin") return resultado.textContent=b>=17?"Categoría 3":b>=14?"Categoría 4":b>=12?"Categoría 5":b>=9?"Categoría 6":b>=6?"Categoría 7":"No corresponde";
+  if(a==="Salud Mental - Profesional Tramo C") return resultado.textContent=b>=17?"Categoría 1":b>=14?"Categoría 2":b>=7?"Categoría 3":"Categoría 4";
+  if(a==="Salud Mental - Profesional Tramos A y B") return resultado.textContent=b>=17?"Categoría 2":b>=14?"Categoría 3":b>=7?"Categoría 4":"Categoría 5";
+  if(a==="Agente Sanitario") return resultado.textContent=b>=25?"Categoría 13":b>=20?"Categoría 10":b>=15?"Categoría 9":b>=12?"Categoría 8":b>=9?"Categoría 7":b>=6?"Categoría 6":"No corresponde";
 }
 
-/* ================== LIMPIAR ================== */
 function limpiar(){
   if (regimen.value === "GENERAL") {
-    document.querySelectorAll("#formGeneral input, #formGeneral select")
-      .forEach(e => e.value = "");
+    document.querySelectorAll("#formGeneral input, #formGeneral select").forEach(e => e.value = "");
   } else {
-    document.querySelectorAll("#formSalud input, #formSalud select")
-      .forEach(e => e.value = "");
+    document.querySelectorAll("#formSalud input, #formSalud select").forEach(e => e.value = "");
   }
 
-  resultado.className = "result";
   resultado.textContent = "—";
 }
 </script>
